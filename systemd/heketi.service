@@ -1,0 +1,18 @@
+[Unit]
+Description=Heketi Server
+
+[Service]
+Type=simple
+#WorkingDirectory=/var/lib/heketi
+WorkingDirectory=/home/vagrant/heketi
+EnvironmentFile=-/etc/heketi/heketi.env
+#User=heketi
+User=root
+#ExecStart=/usr/bin/heketi --config=/etc/heketi/heketi.json
+ExecStart=/home/vagrant/heketi/heketi --config=/home/vagrant/heketi/heketi.json
+Restart=on-failure
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

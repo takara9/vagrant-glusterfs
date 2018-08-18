@@ -1,0 +1,19 @@
+- hosts: localhost
+  connection: local
+  sudo: yes
+
+  tasks:
+    - name: Add GlusterFS Repository
+      apt_repository:
+        repo: ppa:gluster/glusterfs-3.12
+
+    - name: Ensure PKG are installed.
+      apt: name={{ item }} state=installed update_cache=yes
+      with_items:
+        - python-software-properties
+        - glusterfs-server
+        - thin-provisioning-tools
+
+    - name: cp ssh-key
+      template: src=/vagrant/ssh/id_rsa.pub dest=/root/.ssh/authorized_keys mode='0600' owner=root group=root
+

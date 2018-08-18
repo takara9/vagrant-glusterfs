@@ -1,0 +1,45 @@
+- hosts: localhost
+  connection: local
+  sudo: yes
+  vars:
+    - heketi: http://localhost:8080
+
+  tasks:
+    - name: create gluster cluster
+      command: /home/vagrant/heketi/heketi-cli --server {{ heketi }} cluster create mycluster
+      args:
+        chdir: /home/vagrant/heketi
+      register: cluster_id
+
+    #- debug: var=cluster_id.stdout.split(":")[1].strip(' ')
+
+    - name: add node
+      command: /home/vagrant/heketi/heketi-cli --server {{ heketi }} node add -cluster={{ cluster_id.stdout.split(":")[1].strip(' ') }} -zone=1 -management-host-name={{ item }} -storage-host-name={{ item }}
+      args:
+        chdir: /home/vagrant/heketi
+      with_items:
+        - 172.20.1.22
+        - 172.20.1.23
+        - 172.20.1.24
+      register: node
+
+    #- debug: var=node.results[0].stdout_lines
+    #- debug: var=node.results[0].stdout_lines[1].split(":")[1].strip(' ')
+    #- debug: var=node.results[1].stdout_lines[1].split(":")[1].strip(' ')
+    #- debug: var=node.results[2].stdout_lines[1].split(":")[1].strip(' ')
+
+    - name: add device 1
+      command: /home/vagrant/heketi/heketi-cli --server {{ heketi }} device add --name=/dev/sdc --node={{ node.results[0].stdout_lines[1].split(":")[1].strip(' ') }}
+      args:
+        chdir: /home/vagrant/heketi
+
+    - name: add device 2
+      command: /home/vagrant/heketi/heketi-cli --server {{ heketi }} device add --name=/dev/sdc --node={{ node.results[1].stdout_lines[1].split(":")[1].strip(' ') }}
+      args:
+        chdir: /home/vagrant/heketi
+
+    - name: add device 3
+      command: /home/vagrant/heketi/heketi-cli --server {{ heketi }} device add --name=/dev/sdc --node={{ node.results[2].stdout_lines[1].split(":")[1].strip(' ') }}
+      args:
+        chdir: /home/vagrant/heketi
+

@@ -1,0 +1,75 @@
+- hosts: localhost
+  connection: local
+  sudo: yes
+
+  tasks:
+    - name: Add GlusterFS Repository
+      apt_repository:
+        repo: ppa:gluster/glusterfs-3.12
+
+    - name: Ensure PKG are installed.
+      apt: name={{ item }} state=installed update_cache=yes
+      with_items:
+        - curl
+        - python-software-properties
+        - thin-provisioning-tools
+        - glusterfs-client
+
+    - name: cp id_rsa root
+      template:
+        src: /vagrant/ssh/id_rsa
+        dest: /root/.ssh/id_rsa
+        mode: '0600'
+        owner: root
+        group: root
+
+    - name: cp id_rsa vagrant
+      template:
+        src: /vagrant/ssh/id_rsa
+        dest: /home/vagrant/.ssh/id_rsa
+        mode: '0600'
+        owner: vagrant
+        group: vagrant
+      
+    - name: download
+      get_url:
+        url: https://github.com/heketi/heketi/releases/download/1.0.1/heketi-1.0.1.linux.amd64.tar.gz
+        dest: /home/vagrant/
+        mode: 0644
+        owner: vagrant
+        group: vagrant
+
+    - name: extract tar
+      unarchive:
+        src: /home/vagrant/heketi-1.0.1.linux.amd64.tar.gz
+        dest: /home/vagrant
+        mode: 0755
+        owner: vagrant
+        group: vagrant
+
+    - name: cp heketi.json
+      template:
+        src: /vagrant/heketi/heketi.json
+        dest: /home/vagrant/heketi/heketi.json
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: cp heketi.service for systemd
+      template:
+        src: /vagrant/systemd/heketi.service
+        dest: /lib/systemd/system/heketi.service
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: reload systemd service 
+      systemd:
+        name: heketi
+        state: reloaded
+
+    - name: Make sure a service is running
+      systemd:
+        name: heketi
+        state: started
+        enabled: yes

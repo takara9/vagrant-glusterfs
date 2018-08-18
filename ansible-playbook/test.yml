@@ -1,0 +1,16 @@
+- name: test
+#  hosts: gluster1 gluster2 gluster3
+  hosts: all
+#  sudo: yes
+  gather_facts: True
+  tasks:
+    - name: test
+      command: hostname
+      register: myps
+    - debug: var=myps.stdout
+
+    - name: test2
+      command: ps -ax
+
+    #- debug: var=ansible_distribution
+    - debug: var=ansible_facts
