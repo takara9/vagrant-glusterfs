@@ -1,6 +1,6 @@
-- hosts: localhost
+- hosts: heketi
   connection: local
-  sudo: yes
+  become: yes
 
   tasks:
     - name: Add GlusterFS Repository
@@ -8,7 +8,10 @@
         repo: ppa:gluster/glusterfs-3.12
 
     - name: Ensure PKG are installed.
-      apt: name={{ item }} state=installed update_cache=yes
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
       with_items:
         - curl
         - python-software-properties
@@ -66,7 +69,7 @@
     - name: reload systemd service 
       systemd:
         name: heketi
-        state: reloaded
+        state: restarted
 
     - name: Make sure a service is running
       systemd:

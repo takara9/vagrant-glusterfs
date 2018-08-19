@@ -1,6 +1,5 @@
-- hosts: localhost
-  connection: local
-  sudo: yes
+- hosts: heketi
+  become: yes
   vars:
     - heketi: http://localhost:8080
 
@@ -18,9 +17,9 @@
       args:
         chdir: /home/vagrant/heketi
       with_items:
+        - 172.20.1.21
         - 172.20.1.22
         - 172.20.1.23
-        - 172.20.1.24
       register: node
 
     #- debug: var=node.results[0].stdout_lines

@@ -1,0 +1,7 @@
+heketi   ansible_connection=local
+gluster1 ansible_ssh_host=172.20.1.21 ansible_ssh_port=22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/gluster1/virtualbox/private_key
+gluster2 ansible_ssh_host=172.20.1.22 ansible_ssh_port=22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/gluster2/virtualbox/private_key
+gluster3 ansible_ssh_host=172.20.1.23 ansible_ssh_port=22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/gluster3/virtualbox/private_key
+
+[glusters]
+gluster[1:3]
