@@ -34,6 +34,9 @@ Vagrant.configure("2") do |config|
         '--type', 'hdd',
         '--medium', vdisk]
     end
+    machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
+      group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
+    
     machine.vm.provision "shell", inline: <<-EOF
       apt-get update && apt-get install -y python-minimal
     EOF
@@ -69,6 +72,9 @@ Vagrant.configure("2") do |config|
         '--type', 'hdd',
         '--medium', vdisk]
     end
+    machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
+      group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
+    
     machine.vm.provision "shell", inline: <<-EOF
       apt-get update && apt-get install -y python-minimal
     EOF
@@ -104,6 +110,9 @@ Vagrant.configure("2") do |config|
         '--type', 'hdd',
         '--medium', vdisk]
     end
+    machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
+      group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
+    
     machine.vm.provision "shell", inline: <<-EOF
       apt-get update && apt-get install -y python-minimal
     EOF
@@ -121,12 +130,14 @@ Vagrant.configure("2") do |config|
       vbox.cpus = 1
       vbox.memory = 512
     end
+    machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
+      group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
     
     ## GlusterFS インストール 
     #
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/glusterfs.yml"
-      ansible.version        = "2.6.3"
+      ansible.version        = "latest"
       ansible.verbose        = false
       ansible.install        = true
       ansible.limit          = "glusters"
@@ -137,7 +148,7 @@ Vagrant.configure("2") do |config|
     #
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/heketi-host.yml"
-      ansible.version        = "2.6.3"
+      ansible.version        = "latest"
       ansible.verbose        = false
       ansible.install        = true
       ansible.limit          = "heketi"
@@ -146,7 +157,7 @@ Vagrant.configure("2") do |config|
 
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/heketi-node.yml"
-      ansible.version        = "2.6.3"
+      ansible.version        = "latest"
       ansible.verbose        = false
       ansible.install        = true
       ansible.limit          = "heketi"
