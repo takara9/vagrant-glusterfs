@@ -1,7 +1,0 @@
-kind: Service
-apiVersion: v1
-metadata:
- name: glusterfs-cluster-ep
-spec:
- ports:
- - port: 1729
