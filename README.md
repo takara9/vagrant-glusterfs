@@ -1,7 +1,6 @@
 # GlusterFS Server and Heketi Server on Vagrant
 
-この Vagrant と Ansible のコードは、下記の４つの仮想サーバーに　[GlusterFS](https://www.gluster.org/) と [Heketi](https://github.com/heketi/heketi)を構築して、Kuberentes クラスタのポッドからマウントして利用できるようにするものです。
-
+この Vagrant と Ansible のコードは、下記の４つの仮想サーバーに　[GlusterFS](https://www.gluster.org/) と [Heketi](https://github.com/heketi/heketi)を構築して、Kuberentes クラスタのポッドからマウントして利用できるようにするものです。この仮想サーバーのIPアドレスは、仮想サーバーに割り当てられる内部通信用のIPアドレスです。
 
 1. heketi   172.20.1.20  
 1. gluster1 172.20.1.21　
