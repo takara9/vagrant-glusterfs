@@ -36,10 +36,17 @@ Vagrant.configure("2") do |config|
     end
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
+
+    ## GlusterFS インストール 
+    machine.vm.provision "ansible_local" do |ansible|
+      ansible.playbook       = "ansible-playbook/glusterfs.yml"
+      ansible.version        = "latest"
+      ansible.verbose        = false
+      ansible.install        = true
+      ansible.limit          = "gluster1"
+      ansible.inventory_path = "ansible-playbook/hosts"
+    end
     
-    machine.vm.provision "shell", inline: <<-EOF
-      apt-get update && apt-get install -y python-minimal
-    EOF
   end
 
   ## Gluster2 仮想マシンの起動
@@ -74,10 +81,17 @@ Vagrant.configure("2") do |config|
     end
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
+
+    ## GlusterFS インストール 
+    machine.vm.provision "ansible_local" do |ansible|
+      ansible.playbook       = "ansible-playbook/glusterfs.yml"
+      ansible.version        = "latest"
+      ansible.verbose        = false
+      ansible.install        = true
+      ansible.limit          = "gluster2"
+      ansible.inventory_path = "ansible-playbook/hosts"
+    end
     
-    machine.vm.provision "shell", inline: <<-EOF
-      apt-get update && apt-get install -y python-minimal
-    EOF
   end
 
   ## Gluster3 仮想マシンの起動
@@ -112,10 +126,17 @@ Vagrant.configure("2") do |config|
     end
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
-    
-    machine.vm.provision "shell", inline: <<-EOF
-      apt-get update && apt-get install -y python-minimal
-    EOF
+
+    ## GlusterFS インストール 
+    machine.vm.provision "ansible_local" do |ansible|
+      ansible.playbook       = "ansible-playbook/glusterfs.yml"
+      ansible.version        = "latest"
+      ansible.verbose        = false
+      ansible.install        = true
+      ansible.limit          = "gluster3"
+      ansible.inventory_path = "ansible-playbook/hosts"
+    end
+
   end
   
   ## Heketi サーバー
@@ -130,19 +151,21 @@ Vagrant.configure("2") do |config|
       vbox.cpus = 1
       vbox.memory = 512
     end
+
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
-    
-    ## GlusterFS インストール 
+
+
+    ## GlusterFS インストール それぞれのノードに移動
     #
-    machine.vm.provision "ansible_local" do |ansible|
-      ansible.playbook       = "ansible-playbook/glusterfs.yml"
-      ansible.version        = "latest"
-      ansible.verbose        = false
-      ansible.install        = true
-      ansible.limit          = "glusters"
-      ansible.inventory_path = "ansible-playbook/hosts"
-    end
+    #machine.vm.provision "ansible_local" do |ansible|
+    #  ansible.playbook       = "ansible-playbook/glusterfs.yml"
+    #  ansible.version        = "latest"
+    #  ansible.verbose        = false
+    #  ansible.install        = true
+    #  ansible.limit          = "glusters"
+    #  ansible.inventory_path = "ansible-playbook/hosts"
+    #end
 
     ## Heketiインストール 
     #

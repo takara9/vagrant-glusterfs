@@ -9,14 +9,9 @@
 
     - name: Ensure PKG are installed.
       apt:
-        name: "{{ item }}"
+        name: ['curl', 'python-software-properties', 'thin-provisioning-tools', 'glusterfs-client']
         state: present
         update_cache: yes
-      with_items:
-        - curl
-        - python-software-properties
-        - thin-provisioning-tools
-        - glusterfs-client
 
     - name: cp id_rsa root
       template:

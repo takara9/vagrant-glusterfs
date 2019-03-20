@@ -8,13 +8,9 @@
 
     - name: Ensure PKG are installed.
       apt:
-        name: "{{ item }}"
+        name: ['python-software-properties', 'glusterfs-server', 'thin-provisioning-tools']
         state: present
         update_cache: yes
-      with_items:
-        - python-software-properties
-        - glusterfs-server
-        - thin-provisioning-tools
 
     - name: cp ssh-key
       template:
