@@ -1,6 +1,6 @@
 # GlusterFS Server and Heketi Server on Vagrant
 
-この Vagrant と Ansible のコードは、下記の４つの仮想サーバーに　[GlusterFS](https://www.gluster.org/) と [Heketi](https://github.com/heketi/heketi)を構築して、Kuberentes クラスタのポッドからマウントして利用できるようにするものです。この仮想サーバーのIPアドレスは、仮想サーバーに割り当てられる内部通信用のIPアドレスです。
+この Vagrant と Ansibl/e のコードは、下記の４つの仮想サーバーに　[GlusterFS](https://www.gluster.org/) と [Heketi](https://github.com/heketi/heketi)を構築して、Kuberentes クラスタのポッドからマウントして利用できるようにするものです。この仮想サーバーのIPアドレスは、仮想サーバーに割り当てられる内部通信用のIPアドレスです。
 
 1. heketi   172.20.1.20  
 1. gluster1 172.20.1.21　
@@ -39,12 +39,25 @@ Vagrant と VirtualBox が動作するOSが必要です。
 
 ```
 $ git clone https://github.com/takara9/vagrant-glusterfs
+$ cd vagrant-glusterfs
 $ vagrant up
 ```
 
 ## Kubernetes の ポッドからの利用
 
 [https://github.com/takara9/vagrant-kubernetes](https://github.com/takara9/vagrant-kubernetes)で構築したクラスタからテストするには、k8s-yaml マニフェストを適用します。
+
+Kubernetesクラスタのマスターノードにログインして、このリポジトリをクローンして、以下のディレクトに移動します。
+
+```
+$ vagrant ssh master
+$ git clone https://github.com/takara9/vagrant-glusterfs
+$ cd vagrant-glusterfs/k8s-yaml
+```
+
+このディレクトリには、Heketiと連携するプロビジョナーを定義したストレージクラスがあります。
+そしてストレージをダイアミック・プロビジョニングするサンプルのマニフェストがありますから、
+GlusterFSをマウントするポッドを起動して確認することができます。
 
 ```
 kubectl apply -f storageclass.yml (ストレージクラスにHeketiのエンドポイントを登録)
@@ -86,10 +99,28 @@ tmpfs                                             497M     0  497M   0% /proc/sc
 tmpfs                                             497M     0  497M   0% /sys/firmware
 ```
 
+## デフォルトストレージにする
+
+ストレージクラスの設定を省略した場合、GlasterFSをデフォルトストレージに設定することができます。
+それには、その時点の設定に、パッチを当てて、部分的に設置を変更します。
+
+```
+$ kubectl patch storageclass gluster-heketi -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+```
+
+上記を設定することで、以下のようになります。
+
+```
+$ kubectl get storageclass
+NAME                       PROVISIONER               AGE
+gluster-heketi (default)   kubernetes.io/glusterfs   35m
+```
+
+
 
 ## 一時停止と起動
 
-vagrant halt でクラスタの仮想サーバーをシャットダウン、vagrant up で再び起動します。
+`vagrant halt` でクラスタの仮想サーバーをシャットダウン、`vagrant up` で再び起動します。
 
 
 ## クリーンナップ
