@@ -2,9 +2,15 @@
   become: yes
 
   tasks:
+    - name: prerquisit pkg install
+      apt:
+        name: ['software-properties-common']
+        state: present
+        update_cache: yes
+
     - name: Add GlusterFS Repository
       apt_repository:
-        repo: ppa:gluster/glusterfs-3.12
+        repo: ppa:gluster/glusterfs-3.8
 
     - name: Ensure PKG are installed.
       apt:

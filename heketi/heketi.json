@@ -29,6 +29,9 @@
 	    "fstab": "/etc/fstab"
 	},
 	"_db_comment": "Database file name",
-	"db" : "heketi.db"
+	"db" : "heketi.db",
+        "brick_max_size_gb" : 1024,
+	"brick_min_size_gb" : 1,
+	"max_bricks_per_volume" : 33
     }
 }
