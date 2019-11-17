@@ -142,8 +142,7 @@ $ vagrant destroy -f
 
 Red HatのGlusteFSでは、OpenShift v3から問題が解決されている様であるが、コミュニテイ版では、この問題に手作業で対応する必要がある。
 
-対応方法は、k8s-yaml/chmod-pod.yml を適用して、非ルートユーザーにも書き込み権限を与える。
-Helmなどで、pvcを作成した後に pod が、権限が無いために、再起動を繰り返す場合に適用する。
+対応方法は、以下の順番で、k8s-yaml/chmod-pod.yml を適用して、非ルートユーザーにも書き込み権限を与える。
 
 ```
 $ kubectl get pvc 　 PVC名取得
