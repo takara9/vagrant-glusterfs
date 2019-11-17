@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gfs-chmode
+spec:
+  containers:
+  - name: change-mode
+    image: apline 
+    volumeMounts:
+    - name: gfs
+      mountPath: /mnt
+    command: [ "chmod", "a+w", "/mnt"]
+  volumes:
+  - name: gfs
+    persistentVolumeClaim:
+      claimName: <change-me>
