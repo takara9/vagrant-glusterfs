@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: change-mode
-    image: apline 
+    image: alpine 
     volumeMounts:
     - name: gfs
       mountPath: /mnt
