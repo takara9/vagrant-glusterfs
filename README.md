@@ -133,13 +133,14 @@ $ vagrant destroy -f
 
 ## 障害対応
 
-このGlusterFSでは、ルートユーザー以外で動作するコンテナが、ファイルシステムをマウントして、書き込みする場合、`Permission denined` のエラーで異常終了する。これは、rootユーザーでマウントされるためである。
+このGlusterFSでは、ルートユーザー以外で動作するコンテナが、ファイルシステムをマウントして、書き込みする場合、`Permission denined` のエラーで異常終了する。これは、マウントポイントのファイルシステムが、rootユーザーに設定されているためである。
 
 * Bug 1312421 - glusterfs mount-point return permission denied, https://bugzilla.redhat.com/show_bug.cgi?id=1312421
 * POSIX Access Control Lists, https://docs.gluster.org/en/latest/Administrator%20Guide/Access%20Control%20Lists/
 * Product Documentation for Red Hat Gluster Storage 3.5, https://access.redhat.com/documentation/ja-jp/red_hat_gluster_storage/3.5/
 * not able to configure with non root user #314, https://github.com/gluster/glusterfs/issues/314
 
+Red HatのGlusteFSでは、OpenShift v3から問題が解決されている様であるが、コミュニテイ版では、この問題に手作業で対応する必要がある。
 
 対応方法は、k8s-yaml/chmod-pod.yml を適用して、非ルートユーザーにも書き込み権限を与える。
 Helmなどで、pvcを作成した後に pod が、権限が無いために、再起動を繰り返す場合に適用する。
