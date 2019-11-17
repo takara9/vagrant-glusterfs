@@ -150,7 +150,7 @@ $ vi chmod-pod.yml   PVC名をセット
 $ kubectl apply -f chmod-pod.yml 
 ```
 
-マニフェストの中の変更箇所は、最後の行の<change-me>の部分である。
+マニフェストの中の変更箇所は、最後の行の <change-me> 部分である。
 
 ```file:chmod-pod.yml
 apiVersion: v1
