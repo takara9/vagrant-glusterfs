@@ -37,6 +37,10 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
 
+    machine.vm.provision "shell", inline: <<-SHELL
+sudo sed -i.bak -e "s%http://us.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
+SHELL
+
     ## GlusterFS インストール 
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/glusterfs.yml"
@@ -82,6 +86,10 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
 
+    machine.vm.provision "shell", inline: <<-SHELL
+sudo sed -i.bak -e "s%http://us.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
+SHELL
+    
     ## GlusterFS インストール 
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/glusterfs.yml"
@@ -127,6 +135,10 @@ Vagrant.configure("2") do |config|
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",
       group: "vagrant", mount_options: ["dmode=700", "fmode=700"]
 
+    machine.vm.provision "shell", inline: <<-SHELL
+sudo sed -i.bak -e "s%http://us.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
+SHELL
+
     ## GlusterFS インストール 
     machine.vm.provision "ansible_local" do |ansible|
       ansible.playbook       = "ansible-playbook/glusterfs.yml"
@@ -166,7 +178,11 @@ Vagrant.configure("2") do |config|
     #  ansible.limit          = "glusters"
     #  ansible.inventory_path = "ansible-playbook/hosts"
     #end
-
+    
+    machine.vm.provision "shell", inline: <<-SHELL
+sudo sed -i.bak -e "s%http://us.archive.ubuntu.com/ubuntu/%http://ftp.iij.ad.jp/pub/linux/ubuntu/archive/%g" /etc/apt/sources.list
+SHELL
+    
     ## Heketiインストール 
     #
     machine.vm.provision "ansible_local" do |ansible|
@@ -182,7 +198,7 @@ Vagrant.configure("2") do |config|
       ansible.playbook       = "ansible-playbook/heketi-node.yml"
       ansible.version        = "latest"
       ansible.verbose        = false
-      ansible.install        = true
+      ansible.install        = false
       ansible.limit          = "heketi"
       ansible.inventory_path = "ansible-playbook/hosts"
     end
