@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
            'createmedium', 'disk',
            '--filename', vdisk,
            '--format', 'VDI',
-           '--size', 80 * 1024]
+           '--size', 1024000 ]
       end
       # ATTACH DISK
       vbox.customize [
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
            'createmedium', 'disk',
            '--filename', vdisk,
            '--format', 'VDI',
-           '--size', 80 * 1024]
+           '--size', 1024000 ]
       end
       # ATTACH DISK
       vbox.customize [
@@ -113,7 +113,7 @@ Vagrant.configure("2") do |config|
            'createmedium', 'disk',
            '--filename', vdisk,
            '--format', 'VDI',
-           '--size', 80 * 1024]
+           '--size', 1024000 ]
       end
       # ATTACH DISK
       vbox.customize [
