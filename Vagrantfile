@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     machine.vm.provider "virtualbox" do |vbox|
       vbox.gui = false        
       vbox.cpus = 1
-      vbox.memory = 1024
+      vbox.memory = 2048
       # DISK
       vdisk = "vdisk/sdb-1.vdi"
       # CREATE DISK
@@ -63,7 +63,7 @@ SHELL
     machine.vm.provider "virtualbox" do |vbox|
       vbox.gui = false        
       vbox.cpus = 1
-      vbox.memory = 1024
+      vbox.memory = 2048
       # DISK
       vdisk = "vdisk/sdb-2.vdi"
       # CREATE DISK
@@ -112,7 +112,7 @@ SHELL
     machine.vm.provider "virtualbox" do |vbox|
       vbox.gui = false        
       vbox.cpus = 1
-      vbox.memory = 1024
+      vbox.memory = 2048
       # DISK
       vdisk = "vdisk/sdb-3.vdi"
       # CREATE DISK
