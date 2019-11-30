@@ -161,7 +161,7 @@ SHELL
     machine.vm.provider "virtualbox" do |vbox|
       vbox.gui = false        
       vbox.cpus = 1
-      vbox.memory = 1024
+      vbox.memory = 512
     end
 
     machine.vm.synced_folder ".", "/vagrant", owner: "vagrant",

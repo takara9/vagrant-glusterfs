@@ -19,3 +19,11 @@
         mode: '0600'
         owner: root
         group: root
+
+    - name: cp lvm.conf
+      template:
+        src:  /vagrant/lvm/lvm.conf
+        dest: /etc/lvm/lvm.conf
+        mode: '0644'
+        owner: root
+        group: root
