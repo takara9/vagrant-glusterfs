@@ -4,13 +4,19 @@
   tasks:
     - name: Add GlusterFS Repository
       apt_repository:
-        repo: ppa:gluster/glusterfs-3.12
+        repo: ppa:gluster/glusterfs-7
 
-    - name: Ensure PKG are installed.
+    - name: Install the prerequisite packeage
       apt:
-        name: ['python-software-properties', 'glusterfs-server', 'thin-provisioning-tools']
+        name: "{{ packages }}"
         state: present
         update_cache: yes
+      vars:
+        packages:
+        - software-properties-common
+        - thin-provisioning-tools
+        - glusterfs-server
+        - glusterfs-client
 
     - name: cp ssh-key
       template:

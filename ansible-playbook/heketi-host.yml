@@ -2,16 +2,27 @@
   connection: local
   become: yes
 
+  ## https://github.com/heketi/heketi/releases
+  vars:
+    - heketi_url: https://github.com/heketi/heketi/releases/download/v9.0.0/
+    - heketi_tar: heketi-v9.0.0.linux.amd64.tar.gz
+
   tasks:
     - name: Add GlusterFS Repository
       apt_repository:
-        repo: ppa:gluster/glusterfs-3.12
+        repo: ppa:gluster/glusterfs-7
 
-    - name: Ensure PKG are installed.
+    - name: Install the prerequisite packeage
       apt:
-        name: ['curl', 'python-software-properties', 'thin-provisioning-tools', 'glusterfs-client']
+        name: "{{ packages }}"
         state: present
         update_cache: yes
+      vars:
+        packages:
+        - curl
+        - software-properties-common
+        - thin-provisioning-tools
+        - glusterfs-client
 
     - name: cp id_rsa root
       template:
@@ -28,10 +39,10 @@
         mode: '0600'
         owner: vagrant
         group: vagrant
-      
+
     - name: download
       get_url:
-        url: https://github.com/heketi/heketi/releases/download/1.0.1/heketi-1.0.1.linux.amd64.tar.gz
+        url: "{{ heketi_url }}/{{ heketi_tar }}"
         dest: /home/vagrant/
         mode: 0644
         owner: vagrant
@@ -39,7 +50,7 @@
 
     - name: extract tar
       unarchive:
-        src: /home/vagrant/heketi-1.0.1.linux.amd64.tar.gz
+        src: "/home/vagrant/{{ heketi_tar }}"
         dest: /home/vagrant
         mode: 0755
         owner: vagrant

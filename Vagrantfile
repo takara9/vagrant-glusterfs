@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   ## Gluster1 仮想マシンの起動
   #
   config.vm.define 'gluster1' do |machine|
-    machine.vm.box = "ubuntu/xenial64"
+    machine.vm.box = "ubuntu/bionic64"
     machine.vm.hostname = 'gluster1'
     machine.vm.network :private_network,ip: "172.20.1.21"
     #machine.vm.network :public_network, ip: "192.168.1.81", bridge: "en0: Ethernet"
@@ -56,7 +56,7 @@ SHELL
   ## Gluster2 仮想マシンの起動
   #
   config.vm.define 'gluster2' do |machine|
-    machine.vm.box = "ubuntu/xenial64"
+    machine.vm.box = "ubuntu/bionic64"    
     machine.vm.hostname = 'gluster2'
     machine.vm.network :private_network,ip: "172.20.1.22"
     #machine.vm.network :public_network, ip: "192.168.1.82", bridge: "en0: Ethernet"
@@ -105,7 +105,7 @@ SHELL
   ## Gluster3 仮想マシンの起動
   #
   config.vm.define 'gluster3' do |machine|
-    machine.vm.box = "ubuntu/xenial64"
+    machine.vm.box = "ubuntu/bionic64"
     machine.vm.hostname = 'gluster3'
     machine.vm.network :private_network,ip: "172.20.1.23"
     #machine.vm.network :public_network, ip: "192.168.1.83", bridge: "en0: Ethernet"
@@ -154,7 +154,7 @@ SHELL
   ## Heketi サーバー
   #
   config.vm.define vm_name = "heketi" do |machine|
-    machine.vm.box = "ubuntu/xenial64"
+    machine.vm.box = "ubuntu/bionic64"
     machine.vm.hostname = vm_name
     machine.vm.network :private_network,ip: "172.20.1.20"
     #machine.vm.network :public_network, ip: "192.168.1.80", bridge: "en0: Ethernet"
